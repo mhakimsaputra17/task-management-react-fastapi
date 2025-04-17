@@ -20,7 +20,6 @@ const TaskForm = ({
 }: TaskFormProps) => {
   const [formData, setFormData] = useState<TaskFormData>({
     title: "",
-    description: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,19 +28,15 @@ const TaskForm = ({
     if (editingTask) {
       setFormData({
         title: editingTask.title,
-        description: editingTask.description,
       });
     } else {
       setFormData({
         title: "",
-        description: "",
       });
     }
   }, [editingTask]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -63,7 +58,7 @@ const TaskForm = ({
         await createTask(formData);
       }
 
-      setFormData({ title: "", description: "" });
+      setFormData({ title: "" });
       setError(null);
       onTaskAdded();
     } catch (err) {
@@ -80,7 +75,7 @@ const TaskForm = ({
 
   const handleCancel = () => {
     setEditingTask(null);
-    setFormData({ title: "", description: "" });
+    setFormData({ title: "" });
   };
 
   return (

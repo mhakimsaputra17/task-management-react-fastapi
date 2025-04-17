@@ -1,9 +1,8 @@
-import { dummyTasks } from "../data/dummyTasks";
+const API_URL = "http://localhost:8000";
 
 export interface Task {
   id: number;
   title: string;
-  description: string;
   completed: boolean;
   created_at: string;
   updated_at: string;
@@ -11,105 +10,123 @@ export interface Task {
 
 export interface TaskFormData {
   title: string;
-  description: string;
 }
 
-// Store tasks in memory for local state management
-let tasks = [...dummyTasks];
-let nextId = Math.max(...tasks.map((task) => task.id)) + 1;
-
-// Simulate API delay
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+// Error handler
+const handleError = (error: any) => {
+  console.error("API Error:", error);
+  // Check if error is a response object
+  if (error.response) {
+    throw new Error(
+      `API Error: ${error.response.status} - ${error.response.statusText}`
+    );
+  } else if (error.request) {
+    throw new Error("Network Error: Server did not respond");
+  } else {
+    throw new Error(`Error: ${error.message}`);
+  }
+};
 
 export const fetchTasks = async (): Promise<Task[]> => {
-  await delay(600); // Simulate network delay
-  return [...tasks];
+  try {
+    const response = await fetch(`${API_URL}/tasks/`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    handleError(error);
+    throw error;
+  }
 };
 
 export const createTask = async (taskData: TaskFormData): Promise<Task> => {
-  await delay(600);
-  const newTask: Task = {
-    id: nextId++,
-    ...taskData,
-    completed: false,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  };
-
-  tasks = [newTask, ...tasks];
-  return newTask;
+  try {
+    const response = await fetch(`${API_URL}/tasks/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(taskData),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    handleError(error);
+    throw error;
+  }
 };
 
 export const updateTask = async (
   id: number,
   taskData: TaskFormData
 ): Promise<Task> => {
-  await delay(600);
-  const taskIndex = tasks.findIndex((task) => task.id === id);
-
-  if (taskIndex === -1) {
-    throw new Error("Task not found");
+  try {
+    const response = await fetch(`${API_URL}/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(taskData),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    handleError(error);
+    throw error;
   }
-
-  const updatedTask: Task = {
-    ...tasks[taskIndex],
-    ...taskData,
-    updated_at: new Date().toISOString(),
-  };
-
-  tasks = [
-    ...tasks.slice(0, taskIndex),
-    updatedTask,
-    ...tasks.slice(taskIndex + 1),
-  ];
-
-  return updatedTask;
 };
 
 export const deleteTask = async (id: number): Promise<void> => {
-  await delay(600);
-  const taskIndex = tasks.findIndex((task) => task.id === id);
-
-  if (taskIndex === -1) {
-    throw new Error("Task not found");
+  try {
+    const response = await fetch(`${API_URL}/tasks/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return;
+  } catch (error) {
+    handleError(error);
+    throw error;
   }
-
-  tasks = [...tasks.slice(0, taskIndex), ...tasks.slice(taskIndex + 1)];
 };
 
 export const toggleTaskCompletion = async (
   id: number,
   completed: boolean
 ): Promise<Task> => {
-  await delay(600);
-  const taskIndex = tasks.findIndex((task) => task.id === id);
-
-  if (taskIndex === -1) {
-    throw new Error("Task not found");
+  try {
+    const response = await fetch(`${API_URL}/tasks/${id}/toggle`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ completed }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    handleError(error);
+    throw error;
   }
-
-  const updatedTask: Task = {
-    ...tasks[taskIndex],
-    completed,
-    updated_at: new Date().toISOString(),
-  };
-
-  tasks = [
-    ...tasks.slice(0, taskIndex),
-    updatedTask,
-    ...tasks.slice(taskIndex + 1),
-  ];
-
-  return updatedTask;
 };
 
 export const getTaskById = async (id: number): Promise<Task> => {
-  await delay(600);
-  const task = tasks.find((task) => task.id === id);
-
-  if (!task) {
-    throw new Error("Task not found");
+  try {
+    const response = await fetch(`${API_URL}/tasks/${id}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    handleError(error);
+    throw error;
   }
-
-  return { ...task };
 };
