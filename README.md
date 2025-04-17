@@ -1,4 +1,4 @@
-# ✅ TaskMaster Pro: Modern Task Management Application
+# ✅ Task Management Application
 
 <div align="center">
   
@@ -8,11 +8,9 @@
   ![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791?style=for-the-badge&logo=postgresql)
   ![Docker](https://img.shields.io/badge/Deployment-Docker-2496ED?style=for-the-badge&logo=docker)
   
-  <p align="center">
-    <img src="https://github.com/mhakimsaputra17/task-management-react-fastapi/assets/YOUR_ASSET_ID/task-management-logo.png" alt="TaskMaster Pro Logo" width="300"/>
-  </p>
+ 
   
-  <h3>📝 Streamline your workflow with a modern task management solution</h3>
+ 
   <p><i>Last updated: 2025-04-17 | Developed by <a href="https://github.com/mhakimsaputra17">@mhakimsaputra17</a></i></p>
 
 </div>
@@ -34,7 +32,7 @@
 
 ## ✨ Overview
 
-**TaskMaster Pro** is a full-stack web application built with modern technologies that helps users manage their tasks efficiently. With a clean, intuitive interface and powerful backend, this application allows you to create, update, delete, and track the status of your tasks in real-time.
+**Task Management** is a full-stack web application built with modern technologies that helps users manage their tasks efficiently. With a clean, intuitive interface and powerful backend, this application allows you to create, update, delete, and track the status of your tasks in real-time.
 
 The application features a responsive design that works seamlessly across desktop and mobile devices, with a focus on user experience and performance. The robust backend API ensures data persistence and reliability, while the modern React frontend provides a smooth and interactive user experience.
 
