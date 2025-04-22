@@ -269,7 +269,7 @@ frontend/
 ## 🖼️ Screenshots
 
 <div align="center">
-  <p><i>Replace these placeholders with actual screenshots of your application</i></p>
+  
   
   <table>
     <tr>
